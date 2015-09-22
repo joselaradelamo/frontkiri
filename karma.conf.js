@@ -21,14 +21,14 @@ module.exports = function(config) {
       'libs/angular-ui-router/release/angular-ui-router.js',
       'libs/jquery/dist/jquery.js',
       'libs/angular-translate/angular-translate.js',
-      'libs/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
-      'app/app.module.js',
+      'libs/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
+      /*'app/app.module.js',
       'app/app.constants.js',
       'app/app.config.js',
       'app/app.routes.js',
-      'app/app.controller.js',
-      'app/**/*.js',
-      'test/**/*.js'
+      'app/app.controller.js',*/
+      //'app/**/*.js',
+      //'test/**/*.js'
     ],
 
 

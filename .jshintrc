@@ -22,6 +22,6 @@
     "app": true, 
     "angular": false,
     "map": false,
-    "google": false,
+    "google": false
   }
 }

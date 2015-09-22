@@ -10,6 +10,7 @@
 	historyApiFallback 				= require('connect-history-api-fallback'),
 	inject 							= require('gulp-inject'),
 	jshint 							= require('gulp-jshint'),
+	karma 							= require('karma').Server,
 	minifyCss 						= require('gulp-minify-css'),
 	notify 							= require('gulp-notify'),
 	path 							= require('path'),
@@ -21,7 +22,7 @@
 	uglify 							= require('gulp-uglify'),
 	uncss 							= require('gulp-uncss'),
 	useref 							= require('gulp-useref'),
-	wiredep 						= require('wiredep');
+	wiredep 						= require('wiredep').stream;
 	
 	/* CONSTANTS */
 	var APP_PATH					= 'app',
@@ -75,6 +76,10 @@
 			}
 		});
 	});
+
+	gulp.task('dyson', shell.task([
+		'dyson datamock'
+	]));	
 
 	gulp.task('html', function() {
 		gulp.src(APP_HTML_FILES)
@@ -162,10 +167,13 @@
 	  	.pipe(gulp.dest('./dist/assets/css'));
 	});
 
-	gulp.task('tdd', function (done) {
+	gulp.task('tdd', function (done) {		
 		karma.start({
-			configFile: __dirname + '/karma.conf.js'
-		}, done);
+			configFile: __dirname + '/karma.conf.js',
+			singleRun: true
+		}, function(){
+			done();
+		});
 	});
 
 	gulp.task('watch', function() {
