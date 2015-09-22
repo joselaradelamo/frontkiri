@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "homepage": "https://github.com/joselaradelamo/frontkiri",
   "authors": [
-    "Jose Lara <jose.lara@sopra.com>"
+    "Jose Lara <joselaradelamo@gmail.com>"
   ],
   "description": "daikiri frontend",
   "main": "index.html",
@@ -11,9 +11,8 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "libs",
+    "test"
   ],
   "dependencies": {
     "angular": "~1.4.6",
