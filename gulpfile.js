@@ -3,24 +3,25 @@
 
 	/* Requires */
 	var autoprefixer				= require('gulp-autoprefixer'),
-	var compass						= require('gulp-compass'),
-	var connect						= require('gulp-connect'),
-	var gulp 						= require('gulp'),
-	var gulpif 						= require('gulp-if'),
-	var historyApiFallback 			= require('connect-history-api-fallback'),
-	var inject 						= require('gulp-inject'),
-	var jshint 						= require('gulp-jshint'),
-	var minifyCss 					= require('gulp-minify-css'),
-	var notify 						= require('gulp-notify'),
-	var path 						= require('path'),
-	var plumber						= require('gulp-plumber'),
-	var sass 						= require('gulp-sass'),
-	var stylish						= require('jshint-stylish'),
-	var templateCache 				= require('gulp-templatecache'),
-	var uglify 						= require('gulp-uglify'),
-	var uncss 						= require('gulp-uncss'),
-	var useref 						= require('gulp-useref'),
-	var wiredep 					= require('wiredep');
+	 compass						= require('gulp-compass'),
+	 connect						= require('gulp-connect'),
+	 gulp 							= require('gulp'),
+	 gulpif 						= require('gulp-if'),
+	 historyApiFallback 			= require('connect-history-api-fallback'),
+	 inject 						= require('gulp-inject'),
+	 jshint 						= require('gulp-jshint'),
+	 minifyCss 						= require('gulp-minify-css'),
+	 notify 						= require('gulp-notify'),
+	 path 							= require('path'),
+	 plumber						= require('gulp-plumber'),
+	 sass 							= require('gulp-sass'),
+	shell               			= require('gulp-shell'),
+	 stylish						= require('jshint-stylish'),
+	 templateCache 					= require('gulp-templatecache'),
+	 uglify 						= require('gulp-uglify'),
+	 uncss 							= require('gulp-uncss'),
+	 useref 						= require('gulp-useref'),
+	 wiredep 						= require('wiredep');
 	
 	/* CONSTANTS */
 	var APP_PATH					= 'app',
@@ -31,6 +32,7 @@
 	ASSETS_IMG_JPG_FILES      		= path.join(ASSETS_IMG_PATH, 'img', '*.jpg'),
 	ASSETS_IMG_PNG_FILES      		= path.join(ASSETS_IMG_PATH, 'img', '*.png'),
   	ASSETS_STYLES_PATH 				= path.join(ASSETS_PATH, 'stylesheets'),
+	ASSETS_STYLES_CSS_PATH    		= path.join(ASSETS_STYLES_PATH, 'css'),
 	ASSETS_STYLES_SASS_PATH   		= path.join(ASSETS_STYLES_PATH, 'sass'),
 	ASSETS_STYLES_CSS_FILES   		= path.join(ASSETS_STYLES_CSS_PATH, '**', '*.css'),
 	ASSETS_STYLES_SASS_FILES  		= path.join(ASSETS_STYLES_SASS_PATH, '**', '*.scss'),
@@ -47,7 +49,7 @@
 			title: notifyInfo.title,
 			icon: notifyInfo.icon,
 			message: "Error: <%= error.message %>"
-		});
+		})
 	};
 
 	gulp.task('server', function() {
@@ -55,6 +57,18 @@
 			root: [__dirname],
 			hostname: '0.0.0.0',
 			port: 8080,
+			livereload: true,
+			middleware: function(connect, opt) {
+				return [ historyApiFallback ];
+			}
+		});
+	});
+
+	gulp.task('minserver', function() {
+		connect.server({
+			root: [__dirname, '/dist'],
+			hostname: '0.0.0.0',
+			port: 8000,
 			livereload: true,
 			middleware: function(connect, opt) {
 				return [ historyApiFallback ];
@@ -99,6 +113,16 @@
 			.pipe(jshint.reporter('fail'));
 	});
 
+	gulp.task('inject', function() {
+		var sources = gulp.src(['./app/scripts/**\/*.js','./app/stylesheets/**\/*.css']);
+		return gulp.src('index.html', {cwd: './app'})
+		.pipe(inject(sources, {
+			read: false,
+			ignorePath: '/app'
+		}))
+		.pipe(gulp.dest('./app'));
+	});
+
 	gulp.task('wiredep', function () {
 		gulp.src('./index.html')
 		.pipe(plumber(plumberErrorHandler))
@@ -136,6 +160,12 @@
 	    	html: ['./index.html']
 	  	}))
 	  	.pipe(gulp.dest('./dist/assets/css'));
+	});
+
+	gulp.task('tdd', function (done) {
+		karma.start({
+			configFile: __dirname + '/karma.conf.js'
+		}, done);
 	});
 
 	gulp.task('watch', function() {
