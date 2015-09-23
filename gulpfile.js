@@ -60,7 +60,7 @@
 			port: 8080,
 			livereload: true,
 			middleware: function(connect, opt) {
-				return [ historyApiFallback ];
+				return [ historyApiFallback({}) ];
 			}
 		});
 	});
@@ -72,7 +72,7 @@
 			port: 8000,
 			livereload: true,
 			middleware: function(connect, opt) {
-				return [ historyApiFallback ];
+				return [ historyApiFallback({}) ];
 			}
 		});
 	});
@@ -118,7 +118,7 @@
 			.pipe(jshint.reporter('fail'));
 	});
 
-	gulp.task('inject', function() {
+	/*gulp.task('inject', function() {
 		var sources = gulp.src(['./app/scripts/**\/*.js','./app/stylesheets/**\/*.css']);
 		return gulp.src('index.html', {cwd: './app'})
 		.pipe(inject(sources, {
@@ -126,6 +126,18 @@
 			ignorePath: '/app'
 		}))
 		.pipe(gulp.dest('./app'));
+	});*/
+
+	gulp.task('inject', function() {
+		return gulp.src('index.html', {cwd: [__dirname]})
+			.pipe(plumber(plumberErrorHandler))
+			.pipe(inject(
+				gulp.src([APP_JS_FILES, ASSETS_STYLES_CSS_FILES]), {
+				read: false,
+				ignorePath: '/'
+			}))
+			.pipe(gulp.dest('./'))
+			.pipe(connect.reload());
 	});
 
 	gulp.task('wiredep', function () {
