@@ -2,10 +2,12 @@ var app = angular.module('DaikiriApp', [
     'ngResource', 
     'ui.bootstrap',
     'ui.router', 
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'duScroll' 
 ]);
 
 app.value('session', { Id: null, sessionToken: null, name: null, email: null });
+app.value('duScrollOffset', 30);
 
 app.constant('Services', {
 	LoginService: 'https://service/security/login'
@@ -16,7 +18,7 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', functio
 
 	$locationProvider.html5Mode(true);
 
-	$urlRouterProvider.otherwise('/login');
+	$urlRouterProvider.otherwise('/home');
 
 	$stateProvider
 		.state('home', {
@@ -24,12 +26,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', functio
 			templateUrl: 'app/home/home.tpl.html',
 			controller: 'HomeController',
 			requireAuth: false
-		}).state('login', {
+		})/*.state('login', {
 			url: '/login',
 			templateUrl: 'app/login/login.tpl.html',
 			controller: 'LoginController',
 			requireAuth: false
-		});
+		})*/;
 }]);
 
 app.run(['$rootScope', '$urlRouter', function($rootScope, $urlRouter){
