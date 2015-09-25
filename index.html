@@ -18,6 +18,11 @@
   <link rel="stylesheet" href="/assets/stylesheets/css/app.css">
   <!-- endinject -->
 
+  <!-- external:css -->
+  <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css" />
+  <!-- endexternal -->
+
+
   <!-- endbuild -->
 
 </head>
@@ -34,6 +39,7 @@
   </blockquote>
   <![endif]-->
 
+  <div ng-include="'app/navbar/navbar.tpl.html'"></div>
   <div ng-include="'app/cookies/cookies.tpl.html'" ng-show="cookieTerms"></div>
   <div ui-view></div>
   
@@ -63,16 +69,21 @@
   <script src="libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="libs/angular-mocks/angular-mocks.js"></script>
   <script src="libs/angular-resource/angular-resource.js"></script>
+  <script src="libs/angular-scroll/angular-scroll.js"></script>
   <script src="libs/angular-translate/angular-translate.js"></script>
   <script src="libs/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
   <script src="libs/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="libs/jquery/dist/jquery.js"></script>
   <script src="libs/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="libs/jquery.easing/js/jquery.easing.js"></script>
   <!-- endbower -->
 
 
   <!-- inject:js -->
   <script src="/app/app.js"></script>
+  <script src="/app/navbar/navbar.controller.js"></script>
+  <script src="/app/navbar/navbar.service.js"></script>
+  <script src="/app/home/home.controller.js"></script>
   <!-- endinject -->
   
   <!-- endbuild -->
