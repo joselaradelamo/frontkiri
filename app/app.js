@@ -10,7 +10,10 @@ app.value('session', { Id: null, sessionToken: null, name: null, email: null });
 app.value('duScrollOffset', 30);
 
 app.constant('Services', {
-	LoginService: 'https://service/security/login'
+    LoginService: 'https://service/security/login',
+    LogoutService: 'https://service/security/logout',
+    UserInfoService: 'https://service/security/getUserInfo',
+	ProjectsService: 'https://service/security/project'
 });
 
 app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function($locationProvider, $stateProvider, $urlRouterProvider) {
@@ -26,12 +29,12 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', functio
 			templateUrl: 'app/home/home.tpl.html',
 			controller: 'HomeController',
 			requireAuth: false
-		})/*.state('login', {
+		}).state('login', {
 			url: '/login',
 			templateUrl: 'app/login/login.tpl.html',
 			controller: 'LoginController',
 			requireAuth: false
-		})*/;
+		});
 }]);
 
 app.run(['$rootScope', '$urlRouter', function($rootScope, $urlRouter){
