@@ -1,4 +1,5 @@
 var app = angular.module('DaikiriApp', [
+    'vendor', 
     'ngResource', 
     'ui.bootstrap',
     'ui.router', 
